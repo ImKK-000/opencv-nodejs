@@ -1,6 +1,8 @@
 import cv from 'opencv'
 import path from 'path'
 
+// Ref: https://www.pyimagesearch.com/2017/01/02/rotate-images-correctly-with-opencv-and-python/
+
 const fileName = path.resolve(__dirname, 'files', 'input', 'original.png')
 const outputFileName = path.resolve(__dirname, 'files', 'output', 'outputRotate.png')
 
