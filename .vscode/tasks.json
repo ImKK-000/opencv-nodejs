@@ -1,0 +1,29 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build Dockerfile",
+      "type": "shell",
+      "command": "docker",
+      "args": [
+        "build",
+        "-t",
+        "anonyfz/upload-file-server-nodejs:development",
+        "."
+      ]
+    },
+    {
+      "label": "Run Docker",
+      "type": "shell",
+      "command": "docker",
+      "args": [
+        "run",
+        "-it",
+        "--rm",
+        "-v",
+        "$PWD:/app",
+        "anonyfz/upload-file-server-nodejs:development"
+      ]
+    }
+  ]
+}

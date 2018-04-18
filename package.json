@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "opencv": "^6.0.0",
+    "nodemon": "^1.17.3",
+    "babel-cli": "^6.26.0",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-preset-env": "^1.6.1"
+  },
+  "scripts": {
+    "start": "npx nodemon index.js --exec babel-node --presets=env,stage-0"
+  }
+}
