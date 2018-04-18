@@ -2081,7 +2081,7 @@ ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
 
-nan@^2.0.9, nan@^2.3.0:
+nan@>=2.5.1, nan@^2.0.9, nan@^2.3.0:
   version "2.10.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.10.0.tgz#96d0cd610ebd58d4b4de9cc0c6828cda99c7548f"
 
@@ -2102,7 +2102,7 @@ nanomatch@^1.2.9:
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
 
-node-pre-gyp@^0.6.30, node-pre-gyp@^0.6.39:
+node-pre-gyp@^0.6.33, node-pre-gyp@^0.6.39:
   version "0.6.39"
   resolved "https://registry.yarnpkg.com/node-pre-gyp/-/node-pre-gyp-0.6.39.tgz#c00e96860b23c0e1420ac7befc5044e1d78d8649"
   dependencies:
@@ -2218,14 +2218,14 @@ once@1.x, once@^1.3.0, once@^1.3.3:
   dependencies:
     wrappy "1"
 
-opencv@^6.0.0:
+"opencv@git+https://github.com/peterbraden/node-opencv.git":
   version "6.0.0"
-  resolved "https://registry.yarnpkg.com/opencv/-/opencv-6.0.0.tgz#9682bc5c5f35e7d77421bddcf651cf3fe3debe56"
+  resolved "git+https://github.com/peterbraden/node-opencv.git#cfc96ba0af8c13d017d9c72f2c61ec968f1c15fb"
   dependencies:
     buffers "^0.1.1"
     istanbul "0.4.5"
     nan "^2.0.9"
-    node-pre-gyp "^0.6.30"
+    node-pre-gyp "^0.6.33"
 
 optimist@^0.6.1:
   version "0.6.1"
@@ -2605,6 +2605,12 @@ signal-exit@^3.0.0, signal-exit@^3.0.2:
 slash@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/slash/-/slash-1.0.0.tgz#c41f2f6c39fc16d1cd17ad4b5d896114ae470d55"
+
+sleep@^5.1.1:
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/sleep/-/sleep-5.1.1.tgz#878fa1d44d08eeb0f26fb2018ef8629eb1a3ab94"
+  dependencies:
+    nan ">=2.5.1"
 
 snapdragon-node@^2.0.1:
   version "2.1.1"
