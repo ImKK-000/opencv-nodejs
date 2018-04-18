@@ -8,7 +8,7 @@
       "args": [
         "build",
         "-t",
-        "anonyfz/upload-file-server-nodejs:development",
+        "anonyfz/node-opencv-server:development",
         "."
       ]
     },
@@ -22,8 +22,12 @@
         "--rm",
         "-v",
         "$PWD:/app",
-        "anonyfz/upload-file-server-nodejs:development"
-      ]
+        "anonyfz/node-opencv-server:development"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
     }
   ]
 }
