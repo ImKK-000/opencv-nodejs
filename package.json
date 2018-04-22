@@ -9,6 +9,6 @@
   },
   "scripts": {
     "dev": "npx nodemon index.js --exec babel-node --presets=env,stage-0",
-    "docker": "docker run -it --rm -v $PWD:/app anonyfz/workflow-backend:development"
+    "docker": "docker run -it --rm -v $PWD:/app anonyfz/workflow-backend:development npm run dev"
   }
 }
