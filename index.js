@@ -1,7 +1,16 @@
 import cv from 'opencv4nodejs'
 import path from 'path'
 
-const fileName = path.resolve(__dirname, 'files', 'input', 'original.png')
-const outputFileName = path.resolve(__dirname, 'files', 'output', 'output.png')
+(async () => {
+  const fileName = path.join(__dirname, 'files', 'input', 'original.png')
+  const outputFileName = path.join(__dirname, 'files', 'output', 'output.png')
 
-console.log(cv)
+  const rtype = -1
+  const alpha = 3
+  const beta = 150
+
+  const mat = await cv.imread(fileName)
+  const newMat = mat.convertTo(rtype, alpha, beta)
+
+  cv.imwrite(outputFileName, newMat)
+})()

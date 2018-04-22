@@ -1,6 +1,6 @@
 # TODO
 
-- [ ] brightness
+- [x] brightness
 - [ ] rotate
 - [ ] zoom
 - [ ] threshold
