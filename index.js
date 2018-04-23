@@ -1,3 +1,54 @@
+// import cv from 'opencv4nodejs'
+// import path from 'path'
+
+// (async () => {
+//   const fileName = path.join(__dirname, 'files', 'input', 'original.png')
+//   const outputFileName = path.join(__dirname, 'files', 'output', 'output.png')
+
+//   const img = await cv.imread(fileName)
+
+//   // single axis for 1D hist
+//   const getHistAxis = channel => ([
+//     {
+//       channel,
+//       bins: 256,
+//       ranges: [0, 256]
+//     }
+//   ]);
+
+//   // calc histogram for blue, green, red channel
+//   const bHist = cv.calcHist(img, getHistAxis(0));
+//   const gHist = cv.calcHist(img, getHistAxis(1));
+//   const rHist = cv.calcHist(img, getHistAxis(2));
+
+//   const blue = new cv.Vec(255, 0, 0);
+//   const green = new cv.Vec(0, 255, 0);
+//   const red = new cv.Vec(0, 0, 255);
+
+//   // plot channel histograms
+//   const plot = new cv.Mat(300, 600, cv.CV_8UC3, [255, 255, 255]);
+//   cv.plot1DHist(bHist, plot, blue, { thickness: 2 });
+//   cv.plot1DHist(gHist, plot, green, { thickness: 2 });
+//   cv.plot1DHist(rHist, plot, red, { thickness: 2 });
+
+//   cv.imwrite(outputFileName, plot)
+// })()
+
+// export default {
+//   label: '',
+//   type: '',
+//   input: 1,
+//   fill: '#000',
+//   stroke: 'brown',
+//   description: '',
+//   settings: {
+//     thresh: {
+//       defaultValue: 0,
+//       description: ''
+//     },
+//   }
+// }
+
 import cv from 'opencv4nodejs'
 import path from 'path'
 
@@ -5,33 +56,31 @@ import path from 'path'
   const fileName = path.join(__dirname, 'files', 'input', 'original.png')
   const outputFileName = path.join(__dirname, 'files', 'output', 'output.png')
 
-  const [thresh, maxVal, type] = [0, 99, cv.THRESH_BINARY]
-  const mat = await cv.imread(fileName)
+  const img = await cv.imread(fileName)
 
-  const threshold = mat.threshold(thresh, maxVal, type)
-  console.log(type)
-  cv.imwrite(outputFileName, threshold)
+  // single axis for 1D hist
+  const getHistAxis = channel => ([
+    {
+      channel,
+      bins: 256,
+      ranges: [0, 256]
+    }
+  ]);
+
+  const grayImg = img.bgrToGray();
+  const grayHist = cv.calcHist(grayImg, getHistAxis(0));
+  const grayHistPlot = new cv.Mat(350, 700, cv.CV_8UC3, [255, 255, 255]);
+  cv.plot1DHist(grayHist, grayHistPlot, new cv.Vec(0, 0, 0));
+
+  cv.imwrite(outputFileName, grayHistPlot)
 })()
 
 export default {
-  label: 'Threshold',
-  type: 'ThresholdFunction',
+  label: 'Grayscale Histogram',
+  type: 'GrayscaleHistogramFunction',
   input: 1,
   fill: '#000',
   stroke: 'brown',
-  description: 'Applies a fixed-level threshold to each array element.',
-  settings: {
-    thresh: {
-      defaultValue: 0,
-      description: 'Threshold value.'
-    },
-    maxval: {
-      defaultValue: 0,
-      description: 'maximum value to use with the THRESH_BINARY and THRESH_BINARY_INV thresholding types.'
-    },
-    type: {
-      defaultValue: 'THRESH_BINARY',
-      description: 'type of the threshold operation'
-    }
-  }
+  description: 'Calculates a histogram of a set of arrays.',
+  settings: {}
 }

@@ -3,7 +3,7 @@
 - [x] brightness
 - [x] rotate
 - [ ] zoom
-- [ ] threshold
+- [x] threshold
 - [ ] histogram
 - [ ] opening
 - [ ] closing

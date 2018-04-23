@@ -9,7 +9,6 @@ import path from 'path'
   const mat = await cv.imread(fileName)
 
   const threshold = mat.threshold(thresh, maxVal, type)
-  console.log(type)
   cv.imwrite(outputFileName, threshold)
 })()
 
