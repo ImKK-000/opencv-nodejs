@@ -1,7 +1,7 @@
 # TODO
 
 - [x] brightness
-- [ ] rotate
+- [x] rotate
 - [ ] zoom
 - [ ] threshold
 - [ ] histogram

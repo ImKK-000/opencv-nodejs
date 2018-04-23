@@ -18,18 +18,19 @@ export default {
   limitInput: 1,
   fill: '#000',
   stroke: 'brown',
+  description: 'Converts an array to another data type with optional scaling.',
   settings: {
     rtype: {
       defaultValue: -1,
-      description: 'desired output matrix type or, rather, the depth since the number of channels are the same as the input has; if rtype is negative, the output matrix will have the same type as the input.'
+      description: 'Desired output matrix type or, rather, the depth since the number of channels are the same as the input has; if rtype is negative, the output matrix will have the same type as the input.',
     },
     alpha: {
       defaultValue: 1,
-      description: 'optional scale factor.'
+      description: 'Optional scale factor.'
     },
     beta: {
       defaultValue: 0,
-      description: 'optional delta added to the scaled values.'
+      description: 'Optional delta added to the scaled values.'
     }
   }
 }

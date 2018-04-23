@@ -1,45 +1,51 @@
-import cv from 'opencv'
+import cv from 'opencv4nodejs'
 import path from 'path'
-import sleep from 'sleep'
 
-// Ref (rotate): https://www.pyimagesearch.com/2017/01/02/rotate-images-correctly-with-opencv-and-python/
-// Ref (transparent): https://stackoverflow.com/questions/40527769/removing-black-background-and-make-transparent-from-grabcut-output-in-python-ope
-const fileName = path.resolve(__dirname, 'files', 'input', 'original.png')
-const outputFileName = path.resolve(__dirname, 'files', 'output', 'outputRotate.png')
+(async () => {
+  const fileName = path.join(__dirname, 'files', 'input', 'original.png')
+  const outputFileName = path.join(__dirname, 'files', 'output', 'output.png')
 
-for (let angle = 0; angle <= 360; angle += 15) {
-  cv.readImage(fileName, cv.Constants.CV_LOAD_IMAGE_COLOR, (err, im) => {
-    if (angle % 90 === 0) {
-      im.rotate(angle)
-      im.save(outputFileName)
-      return
-    }
+  const [angle] = [50]
 
-    const [h, w] = im.size()
-    const [cX, cY] = [w / 2, h / 2]
+  const mat = await cv.imread(fileName)
+  const { rows: w, cols: h } = mat
+  const [cX, cY] = [w / 2, h / 2]
+  const centerPoint = new cv.Point2(cX, cY)
 
-    const M = cv.Matrix.getRotationMatrix2D(angle, cX, cY, 1.0)
-    const cos = Math.abs(M.get(0, 0))
-    const sin = Math.abs(M.get(0, 1))
-    const nW = Math.floor((h * sin) + (w * cos))
-    const nH = Math.floor((h * cos) + (w * sin))
+  const M = cv.getRotationMatrix2D(centerPoint, angle, 1.0)
+  const cos = Math.abs(M.at(0, 0))
+  const sin = Math.abs(M.at(0, 1))
+  const nW = Math.floor((h * sin) + (w * cos))
+  const nH = Math.floor((h * cos) + (w * sin))
+  const nSize = new cv.Size(nW, nH)
 
-    M.set(0, 2, M.get(0, 2) + (nW / 2) - cX)
-    M.set(1, 2, M.get(1, 2) + (nH / 2) - cY)
+  M.set(0, 2, M.at(0, 2) + (nW / 2) - cX)
+  M.set(1, 2, M.at(1, 2) + (nH / 2) - cY)
 
-    im.warpAffine(M, nW, nH)
+  const newMat = mat.warpAffine(M, nSize)
+  const src = newMat
+  const tmp = new cv.Mat(w, h, cv.CV_8UC4, [255, 255, 255, 255])
+    .cvtColor(cv.COLOR_BGR2GRAY)
+    .warpAffine(M, nSize)
 
-    const src = im
-    const tmp = new cv.Matrix(h, w, cv.Constants.CV_8UC3, [255])
+  const rgb = src.split()
+  const alpha = tmp.threshold(0, 255, cv.THRESH_BINARY)
+  const newMatTransparent = new cv.Mat([...rgb, alpha])
 
-    tmp.convertGrayscale()
-    tmp.warpAffine(M, nW, nH)
+  cv.imwrite(outputFileName, newMatTransparent)
+})()
 
-    const rgb = src.split()
-    const alpha = tmp.threshold(0, 255)
-    im.merge([...rgb, alpha])
-    im.save(outputFileName)
-  })
-
-  sleep.msleep(750)
+export default {
+  label: 'Rotate',
+  type: 'RotateFunction',
+  input: 1,
+  fill: '#000',
+  stroke: 'brown',
+  description: 'Rotates an image around the origin (0,0) and then shifts it.',
+  settings: {
+    angle: {
+      defaultValue: 0,
+      description: 'Angle of rotation in degrees.',
+    },
+  }
 }
